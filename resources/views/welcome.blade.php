@@ -28,18 +28,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($todos as $todo)
-                    <tr>
-                        <td>{{ $todo->description }}</td>
-                        <td>{{ $todo->status }}</td>
-                        <td>{{ $todo->created_at->diffForHumans() }}</td>
-                        <td>
-                            <button class="btn rounded-pill btn-primary btn-sm">✓</button>
-                            <button class="btn rounded-pill btn-light btn-sm">✎</button>
-                            <button class="btn rounded-pill btn-light btn-sm">✕</button>
-                        </td>
-                    </tr>
-                    @endforeach
+                    @if(count($todos) > 0)
+                        @foreach($todos as $todo)
+                        <tr>
+                            <td>{{ $todo->description }}</td>
+                            <td>
+                                @if($todo->status == 'pending')
+                                <span class="badge rounded-pill text-bg-light">PENDING</span>
+                                @else
+                                <span class="badge rounded-pill text-bg-primary">DONE</span>
+                                @endif
+                            </td>
+                            <td>{{ $todo->created_at->diffForHumans() }}</td>
+                            <td>
+                                @if($todo->status == 'pending')
+                                <form method="POST" action="/donetodo">
+                                @csrf
+                                    <input type="hidden" value="{{ $todo->id }}" name="id">
+                                    <button type="submit" class="btn rounded-pill btn-primary btn-sm">✓</button>
+                                </form>
+                                @endif
+                                <form method="POST" action="/deletetodo">
+                                @csrf
+                                    <input type="hidden" value="{{ $todo->id }}" name="id">
+                                    <button type="submit" class="btn rounded-pill btn-light btn-sm">✕</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="4" class="text-center">No todos yet.</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
             <button type="button" data-bs-toggle="modal" data-bs-target="#newTodoModal" class="btn btn-primary btn-sm">New Todo</button>

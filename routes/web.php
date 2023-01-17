@@ -15,4 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\TodoController::class, 'display'])->name('welcome');
 
+// Todo Routes
 Route::post('/newtodo', [App\Http\Controllers\TodoController::class, 'create']);
+Route::post('/donetodo', [App\Http\Controllers\TodoController::class, 'done']);
+Route::post('/deletetodo', [App\Http\Controllers\TodoController::class, 'delete']);
