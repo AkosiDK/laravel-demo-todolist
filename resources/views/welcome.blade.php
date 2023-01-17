@@ -42,13 +42,13 @@
                             <td>{{ $todo->created_at->diffForHumans() }}</td>
                             <td>
                                 @if($todo->status == 'pending')
-                                <form method="POST" action="/donetodo">
+                                <form method="POST" action="/donetodo" style="display:inline-block">
                                 @csrf
                                     <input type="hidden" value="{{ $todo->id }}" name="id">
                                     <button type="submit" class="btn rounded-pill btn-primary btn-sm">✓</button>
                                 </form>
                                 @endif
-                                <form method="POST" action="/deletetodo">
+                                <form method="POST" action="/deletetodo" style="display:inline-block">
                                 @csrf
                                     <input type="hidden" value="{{ $todo->id }}" name="id">
                                     <button type="submit" class="btn rounded-pill btn-light btn-sm">✕</button>
